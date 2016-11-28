@@ -21,12 +21,12 @@ app.use(cors());
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(`${__dirname}/index.html`));
 // });
+app.use(yelpRouter);
 
 app.all('*', (req, res, next) => {
   next(httpError(404, 'route not registered'));
 });
 
 app.use(errorHandler);
-app.use(yelpRouter);
 
 module.exports = exports = app.listen(serverPort, () => console.log('Server running on ' + serverPort));
