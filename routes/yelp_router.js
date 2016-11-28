@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('express').Router;
-// const jsonParser = require('body-parser').json();
+const jsonParser = require('body-parser').json();
 const oauthSignature = require('oauth-signature');
 const request = require('request');
 const querystring = require('querystring');
@@ -17,11 +17,13 @@ function randomString(length, useableCharacters) {
 }
 
 let yelpCall = function(setParams, cb) {
+  console.log('setParams: ', setParams);
   let method = 'GET';
   let url = 'http://api.yelp.com/v2/search/?';
   let params = {
-    location: 'Seattle', //req.body.location
-    sort: '2', //req.body.term
+    location: setParams.location,
+    term: setParams.term,
+    radius_filter: '8046',
     oauth_consumer_key: process.env.oauth_consumer_key || 'uRDu5MDX2XJ_WZpwi3DuGA',
     oauth_token: process.env.oauth_token || 'z898hXhCz10qZqGzXATw8ZjATHFuOUuG',
     oauth_signature_method: 'HMAC-SHA1',
@@ -40,9 +42,12 @@ let yelpCall = function(setParams, cb) {
   });
 };
 
-yelpRouter.get('/', (req, res, next) => {
-  yelpCall('', function(e, r, b){
-    if(b) console.log('body: ', b);
-    res.json(b);
+yelpRouter.post('/', jsonParser, (req, res, next) => {
+  console.log('req.body: ', req.body);
+  yelpCall(req.body, function(e, r, b){
+    if(b) console.log(b);
+    res.status(200);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(b);
   });
 });
