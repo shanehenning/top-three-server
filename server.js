@@ -13,6 +13,8 @@ const serverPort = process.env.PORT || 3000;
 const mongoDatabase = process.env.MONGODB_URI || 'mongodb://localhost/testDB';
 
 const yelpRouter = require('./routes/yelp_router.js');
+const twitterRouter = require('./routes/twitter_router.js');
+const facebookRouter = require('./routes/facebook_router.js');
 
 mongoose.connect(mongoDatabase);
 
@@ -22,6 +24,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(`${__dirname}/index.html`));
 });
 app.use('/api/yelp', yelpRouter);
+app.use('/api/twitter', twitterRouter);
+app.use('/api/facebook', facebookRouter);
 
 app.all('*', (req, res, next) => {
   next(httpError(404, 'route not registered'));
