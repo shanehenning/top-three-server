@@ -8,11 +8,11 @@ const facebookRouter = module.exports = exports = Router();
 
 facebookRouter.post('/', jsonParser, (req, res, next) => {
   console.log('req.body: ', req.body);
-  authorize.facebookCall(req.body, function(e, r, b) {
-    console.log('body: ', b);
+  authorize.facebookCall(req.body, function(error, response, body) {
+    console.log('body: ', body);
     res.status(200);
     res.setHeader('Content-Type', 'application/json');
-    res.send(b);
+    res.send(body);
   });
 });
 

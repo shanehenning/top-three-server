@@ -67,15 +67,24 @@ authorize.facebookCall = function(setParams, cb) {
     AppSecret: 'c01adc9b010ef9ffb152fc4b3cafc5bc',
   };
   let params = {
-    q: setParams.q,
+    q: setParams.q + ' ' + setParams.location,
     type: 'place',
     limit: 1,
-    fields: 'website,hours,price_range,rating_count,talking_about_count,posts.limit(3){message,full_picture}',
+    fields: 'name,menu,about,business,company_overview,description,general_info,single_line_address,username,website,hours,price_range,rating_count,talking_about_count,posts.limit(3){message,full_picture}',
   };
   let apiUrl = searchUrl += querystring.stringify(params) + '&access_token=' + config.AppID + '|' + config.AppSecret;
   request(apiUrl, function(error, res, body){
+    console.log('facebook apiUrl: ', apiUrl);
     return cb(error, res, body);
   });
 };
+
+// authorize.instagramCall = function(setParams, cb){
+//   let apiUrl = 'https://www.instagram.com/' + setParams.q + '/media/';
+//   request(apiUrl, function(error, res,body){
+//     console.log('instagram apiUrl: ', apiUrl);
+//     return cb(error, res, body);
+//   });
+// };
 
 module.exports = exports = authorize;
