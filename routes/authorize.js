@@ -67,10 +67,10 @@ authorize.facebookCall = function(setParams, cb) {
     AppSecret: 'c01adc9b010ef9ffb152fc4b3cafc5bc',
   };
   let params = {
-    q: setParams.q + ' ' + setParams.location,
+    q: setParams.q,
     type: 'place',
     limit: 1,
-    fields: 'name,menu,about,business,company_overview,description,general_info,single_line_address,username,website,hours,price_range,rating_count,talking_about_count,posts.limit(3){message,full_picture}',
+    fields: 'name,menu,about,business,company_overview,cover,picture,description,general_info,single_line_address,username,website,hours,price_range,rating_count,talking_about_count,posts.limit(3){message,full_picture,created_time,updated_time,permalink_url}',
   };
   let apiUrl = searchUrl += querystring.stringify(params) + '&access_token=' + config.AppID + '|' + config.AppSecret;
   request(apiUrl, function(error, res, body){
