@@ -16,15 +16,15 @@ authorize.yelpCall = function(setParams, cb) {
     location: setParams.location,
     term: setParams.term,
     radius_filter: '8046',
-    oauth_consumer_key: __YELP_OAUTH_CONSUMER_KEY__,
-    oauth_token: __YELP_OAUTH_TOKEN__,
+    oauth_consumer_key: YELP_OAUTH_CONSUMER_KEY,
+    oauth_token: YELP_OAUTH_TOKEN,
     oauth_signature_method: 'HMAC-SHA1',
     oauth_timestamp: new Date().getTime(),
     oauth_nonce: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
     oauth_version: '1.0',
   };
-  let consumerSecret = __YELP_CONSUMER_SECRET__;
-  let tokenSecret = __YELP_TOKEN_SECRET__;
+  let consumerSecret = YELP_CONSUMER_SECRET;
+  let tokenSecret = YELP_TOKEN_SECRET;
   let signature = oauthSignature.generate(method, url, params, consumerSecret, tokenSecret, {encodeSignature: false});
   params['oauth_signature'] = signature;
   let paramsUrl = querystring.stringify(params);
@@ -40,8 +40,8 @@ authorize.twitterCall = function(setParams, cb) {
   let oauth = new OAuth.OAuth(
     'https://api.twitter.com/oauth/request_token',
     'https://api.twitter.com/oauth/access_token',
-    __TWITTER_CONSUMER_KEY__,
-    __TWITTER_CONSUMER_SECRET__,
+    TWITTER_CONSUMER_KEY,
+    TWITTER_CONSUMER_SECRET,
     '1.0A',
     null,
     'HMAC-SHA1'
@@ -51,8 +51,8 @@ authorize.twitterCall = function(setParams, cb) {
 
   oauth.get(
     apiUrl,
-    __TWITTER_ACCESS_TOKEN__,
-    __TWITTER_ACCESS_TOKEN_SECRET__,
+    TWITTER_ACCESS_TOKEN,
+    TWITTER_ACCESS_TOKEN_SECRET,
     function(e, data, res) {
       return cb(e,data,res);
     });
@@ -61,8 +61,8 @@ authorize.twitterCall = function(setParams, cb) {
 authorize.facebookCall = function(setParams, cb) {
   let searchUrl = 'https://graph.facebook.com/search?';
   let config = {
-    AppID: __FACEBOOK_APP_ID__,
-    AppSecret: __FACEBOOK_APP_SECRET__,
+    AppID: FACEBOOK_APP_ID,
+    AppSecret: FACEBOOK_APP_SECRET,
   };
   let params = {
     q: setParams.q,
