@@ -16,15 +16,15 @@ authorize.yelpCall = function(setParams, cb) {
     location: setParams.location,
     term: setParams.term,
     radius_filter: '8046',
-    oauth_consumer_key: __YELP_OAUTH_CONSUMER_KEY__ || 'uRDu5MDX2XJ_WZpwi3DuGA',
-    oauth_token: __YELP_OAUTH_TOKEN__ || 'z898hXhCz10qZqGzXATw8ZjATHFuOUuG',
+    oauth_consumer_key: __YELP_OAUTH_CONSUMER_KEY__,
+    oauth_token: __YELP_OAUTH_TOKEN__,
     oauth_signature_method: 'HMAC-SHA1',
     oauth_timestamp: new Date().getTime(),
     oauth_nonce: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
     oauth_version: '1.0',
   };
-  let consumerSecret = __YELP_CONSUMER_SECRET__ || '1-EQsqk2MK10JTYBA4JoPDY87Ik';
-  let tokenSecret = __YELP_TOKEN_SECRET__ || 'F2VqQ2ahPw2LxW8SvmtCBa9CrXY';
+  let consumerSecret = __YELP_CONSUMER_SECRET__;
+  let tokenSecret = __YELP_TOKEN_SECRET__;
   let signature = oauthSignature.generate(method, url, params, consumerSecret, tokenSecret, {encodeSignature: false});
   params['oauth_signature'] = signature;
   let paramsUrl = querystring.stringify(params);
@@ -40,8 +40,8 @@ authorize.twitterCall = function(setParams, cb) {
   let oauth = new OAuth.OAuth(
     'https://api.twitter.com/oauth/request_token',
     'https://api.twitter.com/oauth/access_token',
-    __TWITTER_CONSUMER_KEY__ || 'auPBJN39ONffF7Ks1ratqjUrF',
-    __TWITTER_CONSUMER_SECRET__ || 'GxmKT020fIluhfpD10jzTBVA2ha05yvtcbcYVvqleV5HwH7OU1',
+    __TWITTER_CONSUMER_KEY__,
+    __TWITTER_CONSUMER_SECRET__,
     '1.0A',
     null,
     'HMAC-SHA1'
@@ -51,8 +51,8 @@ authorize.twitterCall = function(setParams, cb) {
 
   oauth.get(
     apiUrl,
-    __TWITTER_ACCESS_TOKEN__ || '804173284635873280-SgmVsDaft3oHXESgTT4oIP9hxpgpV0R',
-    __TWITTER_ACCESS_TOKEN_SECRET__ || 'xuAk68LZGDLiR1avomHo8f0lL89a9Gryp8iuw86A1Z0qi',
+    __TWITTER_ACCESS_TOKEN__,
+    __TWITTER_ACCESS_TOKEN_SECRET__,
     function(e, data, res) {
       return cb(e,data,res);
     });
@@ -61,8 +61,8 @@ authorize.twitterCall = function(setParams, cb) {
 authorize.facebookCall = function(setParams, cb) {
   let searchUrl = 'https://graph.facebook.com/search?';
   let config = {
-    AppID: __FACEBOOK_APP_ID__ || '390234804652238',
-    AppSecret: __FACEBOOK_APP_SECRET__ || 'c01adc9b010ef9ffb152fc4b3cafc5bc',
+    AppID: __FACEBOOK_APP_ID__,
+    AppSecret: __FACEBOOK_APP_SECRET__,
   };
   let params = {
     q: setParams.q,
