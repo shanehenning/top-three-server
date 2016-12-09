@@ -3,7 +3,7 @@
 const app = require('express')();
 const mongoose = require('mongoose');
 const Promise = require('./lib/promise');
-const path = require('path');
+// const path = require('path');
 const cors = require('cors');
 const httpError = require('http-errors');
 const errorHandler = require('./lib/error-handler');
@@ -23,13 +23,14 @@ app.use(cors());
 
 app.use(function(req,res,next){
   res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With', 'Content-Type', 'Accept');
   next();
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/index.html`));
-});
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(`${__dirname}/index.html`));
+// });
 app.use('/api/yelp', yelpRouter);
 app.use('/api/twitter', twitterRouter);
 app.use('/api/facebook', facebookRouter);
