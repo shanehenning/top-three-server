@@ -16,15 +16,15 @@ authorize.yelpCall = function(setParams, cb) {
     location: setParams.location,
     term: setParams.term,
     radius_filter: '8046',
-    oauth_consumer_key: YELP_OAUTH_CONSUMER_KEY,
-    oauth_token: YELP_OAUTH_TOKEN,
+    oauth_consumer_key: process.env.YELP_OAUTH_CONSUMER_KEY,
+    oauth_token: process.env.YELP_OAUTH_TOKEN,
     oauth_signature_method: 'HMAC-SHA1',
     oauth_timestamp: new Date().getTime(),
     oauth_nonce: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
     oauth_version: '1.0',
   };
-  let consumerSecret = YELP_CONSUMER_SECRET;
-  let tokenSecret = YELP_TOKEN_SECRET;
+  let consumerSecret = process.env.YELP_CONSUMER_SECRET;
+  let tokenSecret = process.env.YELP_TOKEN_SECRET;
   let signature = oauthSignature.generate(method, url, params, consumerSecret, tokenSecret, {encodeSignature: false});
   params['oauth_signature'] = signature;
   let paramsUrl = querystring.stringify(params);
@@ -40,8 +40,8 @@ authorize.twitterCall = function(setParams, cb) {
   let oauth = new OAuth.OAuth(
     'https://api.twitter.com/oauth/request_token',
     'https://api.twitter.com/oauth/access_token',
-    TWITTER_CONSUMER_KEY,
-    TWITTER_CONSUMER_SECRET,
+    process.env.TWITTER_CONSUMER_KEY,
+    process.env.TWITTER_CONSUMER_SECRET,
     '1.0A',
     null,
     'HMAC-SHA1'
@@ -51,8 +51,8 @@ authorize.twitterCall = function(setParams, cb) {
 
   oauth.get(
     apiUrl,
-    TWITTER_ACCESS_TOKEN,
-    TWITTER_ACCESS_TOKEN_SECRET,
+    process.env.TWITTER_ACCESS_TOKEN,
+    process.env.TWITTER_ACCESS_TOKEN_SECRET,
     function(e, data, res) {
       return cb(e,data,res);
     });
@@ -61,8 +61,8 @@ authorize.twitterCall = function(setParams, cb) {
 authorize.facebookCall = function(setParams, cb) {
   let searchUrl = 'https://graph.facebook.com/search?';
   let config = {
-    AppID: FACEBOOK_APP_ID,
-    AppSecret: FACEBOOK_APP_SECRET,
+    AppID: process.env.FACEBOOK_APP_ID,
+    AppSecret: process.env.FACEBOOK_APP_SECRET,
   };
   let params = {
     q: setParams.q,
