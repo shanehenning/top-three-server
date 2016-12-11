@@ -76,30 +76,4 @@ authorize.facebookCall = function(setParams, cb) {
   });
 };
 
-authorize.googlePlacesCall = function(setParams,cb){
-  let searchUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
-  let placesUrl = 'https://maps.googleapis.com/maps/api/place/details/json?';
-  let params = {
-    location: setParams.location,
-    radius: 5000,
-    keyword: setParams.q,
-    key: process.env.GOOGLE_MAPS_KEY,
-  };
-  let compiledSearchUrl = searchUrl += querystring.stringify(params);
-  console.log('compiledSearchUrl: ', compiledSearchUrl);
-  request(compiledSearchUrl, function(error,res,body){
-    // console.log('googlePlacesSearch body: ', body);
-    let placesParams = {
-      placeid: JSON.parse(body).results[0].place_id,
-      key: process.env.GOOGLE_MAPS_KEY,
-    };
-    let compiledPlacesUrl = placesUrl += querystring.stringify(placesParams);
-    request(compiledPlacesUrl, function(error,res,body){
-      // console.log('googlePlaceId body: ', body);
-      return cb(error, res, body);
-    });
-  });
-
-};
-
 module.exports = exports = authorize;
