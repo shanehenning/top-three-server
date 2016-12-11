@@ -38,7 +38,7 @@ allRouter.post('/', jsonParser, (req, res, next) => {
       });
 
       var facebookParams = {
-        q: idx.yelp.name + ' ' + idx.yelp.location.city,
+        q: idx.yelp.name,
         // location: idx.yelp.location.city,
       };
       authorize.facebookCall(facebookParams, function(error, response, body) {
@@ -68,13 +68,13 @@ allRouter.post('/', jsonParser, (req, res, next) => {
         // }
       });
 
-      var googleSearchParams = {
-        q: idx.yelp.name,
-        location: parseFloat(idx.yelp.location.coordinate.latitude).toFixed(3) + ',' + parseFloat(idx.yelp.location.coordinate.longitude).toFixed(3),
-      };
-      authorize.googlePlacesCall(googleSearchParams, function(error, response, body) {
-        idx.google = JSON.parse(body);
-      });
+      // var googleSearchParams = {
+      //   q: idx.yelp.name,
+      //   location: parseFloat(idx.yelp.location.coordinate.latitude).toFixed(3) + ',' + parseFloat(idx.yelp.location.coordinate.longitude).toFixed(3),
+      // };
+      // authorize.googlePlacesCall(googleSearchParams, function(error, response, body) {
+      //   idx.google = JSON.parse(body).result;
+      // });
     });
     console.log('returnObject: ', returnObject);
     res.status(200);
